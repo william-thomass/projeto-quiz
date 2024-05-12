@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <style>
+         body{
+            display: block;
+            
+            background-image: linear-gradient( to bottom, rgb(180, 10, 223) , rgb(40, 230, 141));
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 100vh;
+            padding: 0px;
+            margin: 0px;
+        }
+
+         main > h1{
+            font-weight: bold;
+            text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.548);
+        }
+
+        main{
+            position: absolute;
+            top:50%;
+            left:50%;
+
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bolder;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.247);
+            background-color: rgba(255, 255, 255, 0.678);
+            color:rgb(99, 35, 141);
+            text-align: center;
+            border: 1px solid rgb(45, 12, 231);
+            width: 50vw;
+            height: 40vh;
+            
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.699);
+
+
+            transform: translate(-50%,-50%);
+        }
+
+      div#options > button  {
+        background-color: rgba(75, 201, 142, 0.692);
+        color: black;
+        font-weight: bold;
+        margin: 2px;
+        border-radius: 5px;
+
+        
+       }
+
+       div#options > button:hover {
+
+        background-color: rgb(99, 35, 141);
+        color: white;
+        border: 1px solid rgb(15, 15, 15);
+        transition: 0.5s;
+
+       }
+
+       button {
+         background-color: rgba(108, 21, 167, 0.733);
+         margin-top: 5px;
+         border: 1px solid white;
+         border-radius: 5px;
+         cursor: pointer;
+         color: rgb(225, 222, 230);
+       }
+
+       button:hover{
+        background-color: black;
+        color: white;
+        border: 1px solid rgba(108, 21, 167, 0.733) ;
+
+        transition: 0.5s;
+       }
+
+
+
+    </style>
+
+</head>
+<body>
+    <main>
+        <h1>Quiz</h1>
+        <div id="question"></div>
+        <div id="options"></div>
+        <button onclick="nextQuestion()">Próxima Pergunta</button>
+        <p id="score">Pontuação: 0</p>
+    </main>
+
+    <script>
+        // Definindo as perguntas e respostas
+        var questions = [
+            {
+                question: "Qua ano foi inventado o JavaScript",
+                options: ["1990", "1995", "1998", "2000"],
+                answer: "1995"
+            },
+            {
+                question: "Quem inventou o JavaScript?",
+                options: ["Brendan Eich", "Guido van Rossum", "James Gosling", "Rasmus Lerdorf"],
+                answer: "Brendan Eich"
+            },
+            {
+                question: "Quem inventou o Java?",
+                options: ["Brendan Eich", "Guido van Rossum", "James Gosling", "Rasmus Lerdorf"],
+                answer: "James Gosling"
+            }
+        ];
+
+        var currentQuestion = 0;
+        var score = 0;
+
+        // Função para exibir a próxima pergunta
+        function nextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                displayQuestion();
+            } else {
+                endQuiz();
+            }
+        }
+
+        // Função para exibir a pergunta atual
+        function displayQuestion() {
+            var questionDiv = document.getElementById("question");
+            var optionsDiv = document.getElementById("options");
+            var scoreDisplay = document.getElementById("score");
+            
+            questionDiv.innerHTML = questions[currentQuestion].question;
+
+            // Limpar opções anteriores
+            optionsDiv.innerHTML = "";
+
+            // Exibir opções
+            for (var i = 0; i < questions[currentQuestion].options.length; i++) {
+                var option = document.createElement("button");
+                option.innerHTML = questions[currentQuestion].options[i];
+                option.onclick = function() {
+                    checkAnswer(this.innerHTML);
+                };
+                optionsDiv.appendChild(option);
+            }
+
+            scoreDisplay.innerHTML = "Pontuação: " + score;
+        }
+
+        // Função para verificar a resposta
+        function checkAnswer(userAnswer) {
+            if (userAnswer === questions[currentQuestion].answer) {
+                score++;
+                alert("Resposta correta!");
+            } else {
+                alert("Resposta incorreta. A resposta correta é: " + questions[currentQuestion].answer);
+            }
+
+            nextQuestion();
+        }
+
+        // Função para finalizar o quiz
+        function endQuiz() {
+            alert("Quiz encerrado! Sua pontuação final é: " + score);
+            // Pode adicionar mais lógica aqui, como reiniciar o jogo, exibir uma tabela de classificação, etc.
+        }
+
+        // Iniciar o jogo exibindo a primeira pergunta
+        displayQuestion();
+    </script>
+</body>
+</html>
